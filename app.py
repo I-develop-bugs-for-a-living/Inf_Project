@@ -3,7 +3,7 @@ from pygame.locals import *
 import os
 import sys
 import math
-
+#moin hubi
 pygame.init()
 
 SCREEN_WIDTH = 800
