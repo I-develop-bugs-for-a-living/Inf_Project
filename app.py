@@ -10,7 +10,7 @@ SCREEN_WIDTH = 800
 SCREEN_HEIGTH = int(SCREEN_WIDTH * 0.8)
 
 screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGTH))
-pygame.display.set_caption('Aadoaaljs fdjlhkfdsa')
+pygame.display.set_caption('Tolles Spiel')
 
 
 # defining player action variables
