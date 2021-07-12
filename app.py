@@ -3,14 +3,14 @@ from pygame.locals import *
 import os
 import sys
 import math
-
+#moin hubi
 pygame.init()
 
 SCREEN_WIDTH = 800
 SCREEN_HEIGTH = int(SCREEN_WIDTH * 0.8)
 
 screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGTH))
-pygame.display.set_caption('Aadoaaljs fdjlhkfdsa')
+pygame.display.set_caption('Tolles Spiel')
 
 # set framerate
 clock = pygame.time.Clock()
