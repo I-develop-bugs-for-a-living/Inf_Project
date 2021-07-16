@@ -6,8 +6,8 @@ import math
 #moin hubi
 pygame.init()
 
-SCREEN_WIDTH = 800
-SCREEN_HEIGTH = int(SCREEN_WIDTH * 0.8)
+SCREEN_WIDTH = 1000
+SCREEN_HEIGTH = int(SCREEN_WIDTH * 0.7)
 
 screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGTH))
 pygame.display.set_caption('Tolles Spiel')
