@@ -3,7 +3,7 @@ from pygame.locals import *
 import os
 import sys
 import math
-#moin hubi
+
 pygame.init()
 
 SCREEN_WIDTH = 1000
@@ -32,9 +32,15 @@ class Soldier(pygame.sprite.Sprite):
         self.char_type = char_type
         self.speed = speed
         self.direction = 1
-        self.flip = False
-        img = pygame.image.load(f'assets/player/{char_type}.png')
-        self.image = pygame.transform.scale(img, (int(img.get_width() * scale), int(img.get_height() * scale)))
+        self.flip = True
+        self.animation_list = []
+        self.frame_index = 0
+        self.update_time = pygame.time.get_ticks()
+        for i in range(5):
+            img = pygame.image.load(f'assets/{char_type}/Idle/{i}.png')
+            img = pygame.transform.scale(img, (int(img.get_width() * scale), int(img.get_height() * scale)))
+            self.animation_list.append(img)
+        self.image = self.animation_list[self.frame_index]
         self.rect = self.image.get_rect()
         self.rect.center = (x, y)
     
@@ -43,26 +49,39 @@ class Soldier(pygame.sprite.Sprite):
         dy = 0
         if moving_right:
             dx = self.speed
-            self.flip = True
+            self.flip = False
             self.direction = -1
         if moving_left:
             dx = -self.speed
-            self.flip = False
+            self.flip = True
             self.direction = 1
 
         self.rect.x += dx
         self.rect.y += dy
 
+    def update_animation(self):
+        # update animation
+        ANIMATION_COOLDOWN = 100
+        # update image 
+        self.image = self.animation_list[self.frame_index]
+        # check time past
+        if pygame.time.get_ticks() - self.update_time > ANIMATION_COOLDOWN:
+            self.update_time = pygame.time.get_ticks()
+            self.frame_index += 1
+        if self.frame_index >= len(self.animation_list):
+            self.frame_index = 0
+
     def draw(self):
 
         screen.blit(pygame.transform.flip(self.image, self.flip, False),self.rect)
 
-player = Soldier('alien', 200, 200, 1, 5)
+player = Soldier('player', 200, 200, 3, 5)
 
 run = True
 while run:
     clock.tick(FPS)
     draw_bg()
+    player.update_animation()
     player.draw()
     player.move(moving_left, moving_right)
 
