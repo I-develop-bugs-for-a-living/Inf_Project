@@ -3,12 +3,6 @@ from pygame.locals import *
 import os
 import sys
 import math
-<<<<<<< HEAD
-import random
-#moin hubi
-=======
-
->>>>>>> d7b31a388c64dbb2672ed176a83c0626fecd1c65
 pygame.init()
 
 SCREEN_WIDTH = 1000
@@ -78,7 +72,7 @@ class Grenade(pygame.sprite.Sprite):
         self.timer = 100
         self.vel_y = -11
         self.speed = 7
-        self.image = grenade_image
+        self.image = grenade_img
         self.rect = self.image.get_rect()
         self.rect.center = (x, y)
         self.direction = direction
