@@ -5,16 +5,15 @@ from pygame_menu import themes
 
 pygame.init()
 
-a= pygame_menu.font.FONT_8BIT
+a = pygame_menu.font.FONT_8BIT
 
 MyTheme = pygame_menu.themes.THEME_DARK.copy()
 MyTheme.title_background_color=(180, 30, 180,99)
 MyTheme.title_font = a
-MyTheme.title_shadow = True
-MyTheme.widget_background_inflate = 0,6
 
 MyTheme.background_color = (170,20,20,99)
 MyTheme.widget_font = a
+MyTheme.widget_margin = (0,30)
 
 Surface=pygame.display.set_mode((1000,700))
 
