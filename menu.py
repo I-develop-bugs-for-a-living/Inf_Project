@@ -12,12 +12,14 @@ MyTheme = pygame_menu.themes.THEME_DARK.copy()
 myimage = pygame_menu.baseimage.BaseImage(image_path="assets/bg/Background-Pic.jpg", 
 drawing_mode=pygame_menu.baseimage.IMAGE_MODE_FILL)
 
-
 MyTheme.title_font = a
 
-MyTheme.background_color = (170,20,20,99)
+MyTheme.background_color = myimage
+
 MyTheme.widget_font = a
 MyTheme.widget_font_size = (40)
+MyTheme.widget_font_color =(0,0,0)
+
 MyTheme.widget_margin = (0,40)
 
 Surface=pygame.display.set_mode((1000,700))
