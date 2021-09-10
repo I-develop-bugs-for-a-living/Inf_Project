@@ -3,6 +3,18 @@ import os
 import pygame_menu
 from pygame_menu import themes
 
+difficulty_value = 0
+difficulty_int = "None"
+
+def set_variable(value, difficulty):
+    global difficulty_int, difficulty_value
+    difficulty_value = value
+    difficulty_int = difficulty
+
+def start():
+    print(difficulty_value, difficulty_int)
+
+
 pygame.init()
 
 a = pygame_menu.font.FONT_8BIT
@@ -26,8 +38,8 @@ Surface=pygame.display.set_mode((1000,700))
 
 menu = pygame_menu.Menu("Cooles Game" ,1000 , 700, theme=MyTheme)
 menu.add.text_input("Name: ", default= "Hubi")
-menu.add.selector("Schwierigkeit:", [("Leicht",1), ("Hart", 2)])
-menu.add.button("Start",)
+menu.add.selector("Schwierigkeit:", [("Leicht",1), ("Hart", 2)], onchange=set_variable)
+menu.add.button("Start", start)
 menu.add.button("Ausgang", pygame_menu.events.EXIT)
 
 menu.mainloop(Surface)
