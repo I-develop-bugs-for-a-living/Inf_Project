@@ -8,7 +8,11 @@ pygame.init()
 a = pygame_menu.font.FONT_8BIT
 
 MyTheme = pygame_menu.themes.THEME_DARK.copy()
-MyTheme.title_background_color=(180, 30, 180,99)
+
+myimage = pygame_menu.baseimage.BaseImage(image_path="assets/bg/Background-Pic.jpg", 
+drawing_mode=pygame_menu.baseimage.IMAGE_MODE_FILL)
+
+
 MyTheme.title_font = a
 
 MyTheme.background_color = (170,20,20,99)
