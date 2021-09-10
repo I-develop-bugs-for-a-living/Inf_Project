@@ -208,11 +208,12 @@ while run:
 
     draw_bg()
 
+    enemy.update()
+    enemy.draw()
+
     player.update()
     player.draw()
 
-    enemy.update()
-    enemy.draw()
 
     # draw groups
     bullet_group.update()
