@@ -13,7 +13,8 @@ MyTheme.title_font = a
 
 MyTheme.background_color = (170,20,20,99)
 MyTheme.widget_font = a
-MyTheme.widget_margin = (0,30)
+MyTheme.widget_font_size = (40)
+MyTheme.widget_margin = (0,40)
 
 Surface=pygame.display.set_mode((1000,700))
 
