@@ -27,6 +27,8 @@ RED = (255, 0, 0)
 bullet_img = pygame.image.load('assets/game/icons/bullet.png').convert_alpha()
 # grenade
 grenade_img = pygame.image.load('assets/game/icons/grenade.png').convert_alpha()
+# bg
+bg_img = pygame.transform.scale(pygame.image.load('assets/bg/bg.png'), (1000, 720))
 
 # defining player action variables
 moving_left = False
@@ -35,7 +37,7 @@ shoot = False
 
 # draw background color
 def draw_bg():
-    screen.fill(BG)
+    screen.blit(bg_img, (0,0))
     pygame.draw.line(screen, RED, (0, 300), (SCREEN_WIDTH, 300))
 
 class Bullet(pygame.sprite.Sprite):
