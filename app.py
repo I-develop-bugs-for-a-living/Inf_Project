@@ -3,7 +3,6 @@ from pygame.locals import *
 import os
 import sys
 import math
-
 pygame.init()
 
 SCREEN_WIDTH = 1000
@@ -28,6 +27,8 @@ RED = (255, 0, 0)
 bullet_img = pygame.image.load('assets/game/icons/bullet.png').convert_alpha()
 # grenade
 grenade_img = pygame.image.load('assets/game/icons/grenade.png').convert_alpha()
+# bg
+bg_img = pygame.transform.scale(pygame.image.load('assets/bg/bg.png'), (1000, 720))
 
 # defining player action variables
 moving_left = False
@@ -38,7 +39,7 @@ grenade_thrown = False
 
 # draw background color
 def draw_bg():
-    screen.fill(BG)
+    screen.blit(bg_img, (0,0))
     pygame.draw.line(screen, RED, (0, 300), (SCREEN_WIDTH, 300))
 
 class Grenade(pygame.sprite.Sprite):
@@ -99,6 +100,21 @@ class Bullet(pygame.sprite.Sprite):
                 enemy.health -= 100
                 self.kill()
 
+<<<<<<< HEAD
+=======
+
+class Grenade(pygame.sprite.Sprite):
+    def __init__(self, x, y, direction):
+        pygame.sprite.Sprite.__init__(self)
+        self.timer = 100
+        self.vel_y = -11
+        self.speed = 7
+        self.image = grenade_img
+        self.rect = self.image.get_rect()
+        self.rect.center = (x, y)
+        self.direction = direction
+
+>>>>>>> e718592e81c75ee9e7a18c86a61af140f9aa6604
 # create  sprite groups
 bullet_group = pygame.sprite.Group()
 grenade_group = pygame.sprite.Group()
@@ -230,11 +246,12 @@ while run:
 
     draw_bg()
 
+    enemy.update()
+    enemy.draw()
+
     player.update()
     player.draw()
 
-    enemy.update()
-    enemy.draw()
 
     # draw groups
     bullet_group.update()
