@@ -34,12 +34,45 @@ bg_img = pygame.transform.scale(pygame.image.load('assets/bg/bg.png'), (1000, 72
 moving_left = False
 moving_right = False
 shoot = False
+grenade = False
+grenade_thrown = False
 
 # draw background color
 def draw_bg():
     screen.blit(bg_img, (0,0))
     pygame.draw.line(screen, RED, (0, 300), (SCREEN_WIDTH, 300))
 
+class Grenade(pygame.sprite.Sprite):
+    def __init__(self, x, y, direction):
+        pygame.sprite.Sprite.__init__(self)
+        self.timer = 100
+        self.vel_y = -11
+        self.speed = 7
+        self.image = grenade_img
+        self.rect = self.image.get_rect()
+        self.rect.center = (x, y)
+        self.direction = direction
+
+    def update(self):
+        self.vel_y += GRAVITY
+        dx = self.direction * self.speed
+        dy = self.vel_y
+        
+        # don't go through the floor
+        if self.rect.bottom + dy > 300:
+            dy = 300 - self.rect.bottom
+            self.speed = 0
+
+        # don't go through the wall
+        if self.rect.left + dx < 0 or self.rect.right + dx > SCREEN_WIDTH:
+            self.direction *= -1
+            dx = self.direction * self.speed
+
+        # update grenade position
+        self.rect.x += dx
+        self.rect.y += dy
+
+        
 class Bullet(pygame.sprite.Sprite):
     def __init__(self, x, y, direction):
         pygame.sprite.Sprite.__init__(self)
@@ -67,6 +100,8 @@ class Bullet(pygame.sprite.Sprite):
                 enemy.health -= 100
                 self.kill()
 
+<<<<<<< HEAD
+=======
 
 class Grenade(pygame.sprite.Sprite):
     def __init__(self, x, y, direction):
@@ -79,11 +114,13 @@ class Grenade(pygame.sprite.Sprite):
         self.rect.center = (x, y)
         self.direction = direction
 
+>>>>>>> e718592e81c75ee9e7a18c86a61af140f9aa6604
 # create  sprite groups
 bullet_group = pygame.sprite.Group()
+grenade_group = pygame.sprite.Group()
 
 class Soldier(pygame.sprite.Sprite):
-    def __init__(self, char_type, x, y, scale, speed, ammo) -> None:
+    def __init__(self, char_type, x, y, scale, speed, ammo, grenades) -> None:
         pygame.sprite.Sprite.__init__(self)
         self.alive = True
         self.char_type = char_type
@@ -92,6 +129,7 @@ class Soldier(pygame.sprite.Sprite):
         self.start_ammo = ammo
         self.shoot_cooldown = 0
         self.health = 100
+        self.grenades = grenades
         self.max_health = self.health
         self.direction = 1
         self.vel_y = 0
@@ -199,8 +237,8 @@ class Soldier(pygame.sprite.Sprite):
 
         screen.blit(pygame.transform.flip(self.image, self.flip, False),self.rect)
 
-player = Soldier('player', 200, 200, 3, 5, 20)
-enemy = Soldier('enemy', 200, 200, 3, 5, 20)
+player = Soldier('player', 200, 200, 3, 5, 20, 5)
+enemy = Soldier('enemy', 200, 200, 3, 5, 20, 0)
 
 run = True
 while run:
@@ -217,11 +255,20 @@ while run:
 
     # draw groups
     bullet_group.update()
+    grenade_group.update()
     bullet_group.draw(screen)
+    grenade_group.draw(screen)
 
     if player.alive:
         if shoot:
            player.shoot()
+        # trigger grenade
+        elif grenade and not grenade_thrown and player.grenades > 0:
+            grenade_projectile = Grenade(player.rect.centerx + (0.5 * player.rect.size[0] * player.direction), player.rect.top, player.direction)
+            grenade_group.add(grenade_projectile)
+            player.grenades -= 1
+            grenade_thrown = True
+        
         if player.in_air:
             player.update_action(2)
         if moving_left or moving_right:
@@ -241,6 +288,8 @@ while run:
                 moving_right = True
             if event.key == pygame.K_SPACE:
                 shoot = True
+            if event.key == pygame.K_q:
+                grenade = True
             if event.key == pygame.K_w and player.alive:
                 player.jump = True
         
@@ -253,6 +302,10 @@ while run:
                 shoot = False
             if event.key == pygame.K_ESCAPE:
                 run = False
+            if event.key == pygame.K_q:
+                grenade = False
+                grenade_thrown = False
+
     pygame.display.update()
 
 pygame.quit()
