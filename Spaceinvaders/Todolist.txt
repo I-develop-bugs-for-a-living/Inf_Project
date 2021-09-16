@@ -1,0 +1,44 @@
+To do:
+``````
+-Audio
+    -Bgmusic
+    -Shootsound
+    -Explosionsound
+    -Soundeffects: https://www.zapsplat.com
+-Explosionsanimation
+    -kaboom
+-Particles
+    -for accelaration
+-More Enemies
+-Custom flight path
+    -maybe
+-Story?
+-Score
+    -Top left corner x
+        -custom font
+-Scorelist
+    -accesseble from Startscreen
+-Weaponupgrades
+    -selfflying
+    -aoeweapons
+    -sniper
+    -laser
+-Spaceship custimization
+    -custom and premade skins
+-Startscreen
+    -homescreen with links to shop and settings
+    -random background :) x
+    -settings
+        -hardness bar
+        -sound
+-Tutorial
+    -maybe
+-Shop
+    -backgrounds, playerskins, enemyskins, bullletskins, advanced weapons
+    
+    -Upgrades
+        -health, damage, shield, speed, flightanimation
+-Boss
+    -shoots, flyies faster and in irregular patterns, spawns enemys
+-Items
+    -heals, collectable weaponupgrades(reduce cooldown, shields, damage boost)
