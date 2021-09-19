@@ -23,6 +23,7 @@ GRAVITY = 0.75
 # define Colors
 BG = (144, 201, 120)
 RED = (255, 0, 0)
+WHITE = (255, 255, 255)
 
 # load images
 # bullet
@@ -35,10 +36,17 @@ bg_img = pygame.transform.scale(pygame.image.load('assets/bg/bg.png'), (1000, 72
 health_box_img = pygame.image.load('assets/game/icons/health_box.png').convert_alpha()
 ammo_box_img = pygame.image.load('assets/game/icons/ammo_box.png').convert_alpha()
 grenade_box_img = pygame.image.load('assets/game/icons/grenade_box.png').convert_alpha()
+speed_box_img = pygame.image.load('assets/game/icons/grenade_box.png').convert_alpha()
+jump_box_img = pygame.image.load('assets/game/icons/grenade_box.png').convert_alpha()
+damage_box_img = pygame.image.load('assets/game/icons/grenade_box.png').convert_alpha()
+
 item_boxes = {
     'Health' : health_box_img,
     'Ammo'  : ammo_box_img,
     'Grenade' : grenade_box_img,
+    'Speed' : speed_box_img,
+    'Jump'  : jump_box_img,
+    'Damage' : damage_box_img,
 }
 # defining player action variables
 moving_left = False
@@ -77,6 +85,13 @@ class ItemBox(pygame.sprite.Sprite):
                 player.ammo += 15
             elif self.item_type == 'Grenade':
                 player.grenades += 3
+            elif self.item_type == 'Speed':
+                player.speed += 5
+            elif self.item_type == 'Jump':
+                player.jump_heigth -= 4
+            elif self.item_type == 'Damage':
+                player.health -= 5
+                player.speed -= 5
             self.kill()
 
 class Grenade(pygame.sprite.Sprite):
@@ -193,6 +208,7 @@ class Soldier(pygame.sprite.Sprite):
         self.max_health = self.health
         self.direction = 1
         self.vel_y = 0
+        self.jump_heigth = -11
         self.jump = False
         self.in_air = True
         self.flip = True
@@ -238,7 +254,7 @@ class Soldier(pygame.sprite.Sprite):
 
         # jump
         if self.jump == True and self.in_air == False:
-            self.vel_y = -11
+            self.vel_y = self.jump_heigth
             self.jump = False
             self.in_air = True
         
@@ -259,7 +275,7 @@ class Soldier(pygame.sprite.Sprite):
     def shoot(self):
         if self.shoot_cooldown == 0 and self.ammo > 0:
             self.shoot_cooldown = 20
-            bullet = Bullet(player.rect.centerx + (0.6 * player.rect.size[0] * player.direction), player.rect.centery, player.direction)
+            bullet = Bullet(player.rect.centerx + (0.7 * player.rect.size[0] * player.direction), player.rect.centery, player.direction)
             bullet_group.add(bullet)
             # subtract from ammo variable
             self.ammo -= 1
@@ -324,6 +340,15 @@ while run:
     clock.tick(FPS)
 
     draw_bg()
+
+    # show ammo and grenades
+    draw_text('AMMO: ', font, WHITE, 10, 35)
+    for x in range(player.ammo):
+        screen.blit(bullet_img, (90 + (x * 10), 40))
+    # show grenades
+    draw_text('GRENADE: ', font, WHITE, 10, 60)
+    for x in range(player.grenades):
+        screen.blit(grenade_img, (120 + (x * 15), 65))
 
     for enemy in enemy_group:
         enemy.update()
