@@ -27,9 +27,9 @@ WHITE = (255, 255, 255)
 
 # load images
 # bullet
-bullet_img = pygame.image.load('assets/game/icons/bullet.png').convert_alpha()
+bullet_img = pygame.transform.rotate(pygame.image.load('assets/game/icons/bullet.png').convert_alpha(), 90)
 # grenade
-grenade_img = pygame.image.load('assets/game/icons/grenade.png').convert_alpha()
+grenade_img = pygame.transform.scale(pygame.image.load('assets/game/Pixilart Sprite Sheet.jpg').convert_alpha(), (20, 20))
 # bg
 bg_img = pygame.transform.scale(pygame.image.load('assets/bg/bg.png'), (1000, 720))
 # boxes
@@ -344,11 +344,11 @@ while run:
     # show ammo and grenades
     draw_text('AMMO: ', font, WHITE, 10, 35)
     for x in range(player.ammo):
-        screen.blit(bullet_img, (90 + (x * 10), 40))
+        screen.blit(bullet_img, (90 + (x * 10), 35))
     # show grenades
     draw_text('GRENADE: ', font, WHITE, 10, 60)
     for x in range(player.grenades):
-        screen.blit(grenade_img, (120 + (x * 15), 65))
+        screen.blit(grenade_img, (120 + (x * 15), 60))
 
     for enemy in enemy_group:
         enemy.update()

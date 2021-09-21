@@ -1,8 +1,9 @@
 import pygame
 from bullet import Bullet
 
-class Player:
+class Player(pygame.sprite.Sprite):
     def __init__(self, x, y, width, height, win, win_width, win_height):
+        pygame.sprite.Sprite.__init__()
         self.x = x
         self.y = y
         self.width = width
