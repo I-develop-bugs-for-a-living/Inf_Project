@@ -33,12 +33,12 @@ grenade_img = pygame.transform.scale(pygame.image.load('assets/game/Pixilart Spr
 # bg
 bg_img = pygame.transform.scale(pygame.image.load('assets/bg/bg.png'), (1000, 720))
 # boxes
-health_box_img = pygame.image.load('assets/game/icons/health_box.png').convert_alpha()
-ammo_box_img = pygame.image.load('assets/game/icons/ammo_box.png').convert_alpha()
-grenade_box_img = pygame.image.load('assets/game/icons/grenade_box.png').convert_alpha()
-speed_box_img = pygame.image.load('assets/game/icons/grenade_box.png').convert_alpha()
-jump_box_img = pygame.image.load('assets/game/icons/grenade_box.png').convert_alpha()
-damage_box_img = pygame.image.load('assets/game/icons/grenade_box.png').convert_alpha()
+health_box_img = pygame.transform.scale(pygame.image.load('assets/game/Boxen/health.png').convert_alpha(), (200, 200))
+ammo_box_img = pygame.transform.scale(pygame.image.load('assets/game/Boxen/bullet.png').convert_alpha(), (200, 200))
+grenade_box_img = pygame.transform.scale(pygame.image.load('assets/game/Boxen/grenades.png').convert_alpha(), (200, 200))
+speed_box_img = pygame.transform.scale(pygame.image.load('assets/game/Boxen/speed.png').convert_alpha(), (200, 200))
+jump_box_img = pygame.transform.scale(pygame.image.load('assets/game/Boxen/jump.png').convert_alpha(), (200, 200))
+damage_box_img = pygame.transform.scale(pygame.image.load('assets/game/Boxen/poison.png').convert_alpha(), (200, 200))
 
 item_boxes = {
     'Health' : health_box_img,
