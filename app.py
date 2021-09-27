@@ -24,6 +24,8 @@ GRAVITY = 0.75
 BG = (144, 201, 120)
 RED = (255, 0, 0)
 WHITE = (255, 255, 255)
+GREEN = (0, 255, 0)
+BLACK = (0, 0, 0)
 
 # load images
 # bullet
@@ -67,6 +69,22 @@ def draw_bg():
     screen.blit(bg_img, (0,0))
     pygame.draw.line(screen, RED, (0, 300), (SCREEN_WIDTH, 300))
 
+
+class HealthBar():
+    def __init__(self, x, y, health, max_health) -> None:
+        self.x = x
+        self.y = y
+        self.health = health
+        self.max_health = max_health
+    
+    def draw(self, health):
+        self.health = health
+        ratio = self.health / self.max_health
+        pygame.draw.rect(screen, BLACK, (self.x - 2, self.y - 2, 154, 24))
+        pygame.draw.rect(screen, RED, (self.x, self.y, 150, 20))
+        pygame.draw.rect(screen, GREEN, (self.x, self.y, 150 * ratio, 20))
+
+
 class ItemBox(pygame.sprite.Sprite):
     def __init__(self, item_type, x, y):
         pygame.sprite.Sprite.__init__(self)
@@ -93,6 +111,7 @@ class ItemBox(pygame.sprite.Sprite):
                 player.health -= 5
                 player.speed -= 5
             self.kill()
+
 
 class Grenade(pygame.sprite.Sprite):
     def __init__(self, x, y, direction):
@@ -137,7 +156,8 @@ class Grenade(pygame.sprite.Sprite):
             for enemy in enemy_group:
                 if abs(self.rect.centerx - enemy.rect.centerx) < TILE_SIZE * 2 and abs(self.rect.centery - enemy.rect.centery) < TILE_SIZE * 2:
                     enemy.health -= 50
-        
+
+
 class Explosion(pygame.sprite.Sprite):
     def __init__(self, x, y, scale):
         pygame.sprite.Sprite.__init__(self)
@@ -164,7 +184,8 @@ class Explosion(pygame.sprite.Sprite):
                 self.kill()
             else:
                 self.image = self.images[self.frame_index]
-        
+
+
 class Bullet(pygame.sprite.Sprite):
     def __init__(self, x, y, direction):
         pygame.sprite.Sprite.__init__(self)
@@ -280,6 +301,15 @@ class Soldier(pygame.sprite.Sprite):
             # subtract from ammo variable
             self.ammo -= 1
 
+    def ai(self):
+        if self.alive and player.alive:
+            if self.direction == 1:
+                ai_moving_right = True
+            else:
+                ai_moving_right = False
+            ai_moving_left = not ai_moving_right
+            self.move(ai_moving_left, ai_moving_right)
+
     def update_animation(self):
         # update animation
         ANIMATION_COOLDOWN = 100
@@ -328,9 +358,11 @@ for i in ["Ammo", "Health", "Grenade"]:
     a += 100
     item_box_group.add(item_box)
 
-player = Soldier('player', 200, 200, 3, 5, 20, 5)
-enemy = Soldier('enemy', 200, 200, 3, 5, 20, 0)
-enemy2 = Soldier('enemy', 300, 300, 3, 5, 20, 0)
+player = Soldier('player', 200, 200, 1.65, 5, 20, 5)
+health_bar = HealthBar(10, 10, player.health, player.health)
+
+enemy = Soldier('enemy', 200, 200, 1.65, 5, 20, 0)
+enemy2 = Soldier('enemy', 300, 300, 1.65, 5, 20, 0)
 
 enemy_group.add(enemy)
 enemy_group.add(enemy2)
@@ -340,6 +372,8 @@ while run:
     clock.tick(FPS)
 
     draw_bg()
+    # show healthbar
+    health_bar.draw(player.health)
 
     # show ammo and grenades
     draw_text('AMMO: ', font, WHITE, 10, 35)
@@ -352,11 +386,11 @@ while run:
 
     for enemy in enemy_group:
         enemy.update()
+        enemy.ai()
         enemy.draw()
 
     player.update()
     player.draw()
-
 
     # draw groups
     bullet_group.update()
