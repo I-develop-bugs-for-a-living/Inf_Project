@@ -296,7 +296,7 @@ class Soldier(pygame.sprite.Sprite):
     def shoot(self):
         if self.shoot_cooldown == 0 and self.ammo > 0:
             self.shoot_cooldown = 20
-            bullet = Bullet(player.rect.centerx + (0.7 * player.rect.size[0] * player.direction), player.rect.centery, player.direction)
+            bullet = Bullet(player.rect.centerx + (0.8 * player.rect.size[0] * player.direction), player.rect.centery, player.direction)
             bullet_group.add(bullet)
             # subtract from ammo variable
             self.ammo -= 1
