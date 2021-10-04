@@ -237,6 +237,10 @@ class Soldier(pygame.sprite.Sprite):
         self.frame_index = 0
         self.action = 0
         self.update_time = pygame.time.get_ticks()
+        # ai variables
+        self.move_counter = 0
+        self.idling = False
+        self.idling_counter = 0
 
         # load all images for the players
         animation_types = ['Idle', 'Run', 'Jump', 'Death']
@@ -309,6 +313,12 @@ class Soldier(pygame.sprite.Sprite):
                 ai_moving_right = False
             ai_moving_left = not ai_moving_right
             self.move(ai_moving_left, ai_moving_right)
+            self.update_action(1)
+            self.move_counter += 1
+
+            if self.move_counter > TILE_SIZE:
+                self.direction *= -1
+                self.move_counter *= -1
 
     def update_animation(self):
         # update animation
